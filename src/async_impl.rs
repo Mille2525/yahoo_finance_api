@@ -250,6 +250,8 @@ impl YahooConnector {
     async fn send_request(&self, url: &str) -> Result<serde_json::Value, YahooError> {
         let resp = self.client.get(url).send().await?.text().await?;
 
+        println!("Response: {}", resp);
+
         serde_json::from_str::<serde_json::Value>(&resp)
             .map_err(|e| YahooError::DeserializeFailed(e))
     }
